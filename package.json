@@ -1,0 +1,25 @@
+{
+  "name": "vue_meeting_workshop",
+  "version": "1.0.0",
+  "description": "",
+  "main": "index.js",
+  "scripts": {
+    "start:frontend": "cd Frontend && npm run serve",
+    "start:backend": "cd Backend && npm start",
+    "start": "concurrently \"npm run start:backend\" \"npm run start:frontend\""
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/resjbc/vue_meeting_workshop.git"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/resjbc/vue_meeting_workshop/issues"
+  },
+  "homepage": "https://github.com/resjbc/vue_meeting_workshop#readme",
+  "dependencies": {
+    "concurrently": "^4.0.1"
+  }
+}
