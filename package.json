@@ -7,6 +7,10 @@
     "start:frontend": "cd Frontend && npm run serve",
     "start:backend": "cd Backend && npm start",
     "start": "concurrently \"npm run start:backend\" \"npm run start:frontend\""
+<<<<<<< HEAD
+=======
+
+>>>>>>> 3f810b6c13cfd71674a5884761385e4d4cbdad70
   },
   "repository": {
     "type": "git",
