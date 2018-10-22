@@ -5,6 +5,10 @@ const { check, validationResult } = require('express-validator/check');
 const server = express();
 const PORT = 3000;
 
+const connect = require("./configs/database");
+
+connect.query('show tables',(err,result) => {console.log(result);})
+
 // ตั้งค่า Session สำหรับระบบ
 server.use(expressSession({
     secret: 'hitman',
