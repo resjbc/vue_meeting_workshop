@@ -1,8 +1,9 @@
 const express = require('express');
-const bodyParser = require('body-parser')
-const expressSession = require('express-session')
-const { check, validationResult } = require('express-validator/check');
+const bodyParser = require('body-parser');
+const expressSession = require('express-session');
+//const { check, validationResult } = require('express-validator/check');
 const server = express();
+const routes = require('./routes');
 const PORT = 3000;
 
 const connect = require("./configs/database");
@@ -21,27 +22,11 @@ server.use(expressSession({
 server.use(bodyParser.urlencoded({extended: false}))
 server.use(bodyParser.json())
 
-server.post('/',[
-  check('firstname').not().isEmpty(),
-  check('lastname').not().isEmpty()    
-], (req, res) => {
-    try {
-        validationResult(req).throw();
-        res.json(req.body);
-    }catch (ex) {
-        res.status(400).json({message: ex.message});
-    }
-})
 
-/*server.get('/s', (req, res) => {
-    req.session.item = 'Hello World';
-    res.end('set Session');
-})*/
+//เรียกใช้งาน routes
+server.use('/api',routes)
 
 server.get('*', (req, res) => {
-    /*res.json({
-        message: 'Backend Server is Started'
-    });*/
     res.end(`<h1>Backend Server is Started. session is ${req.session.item}</h1>`)
 });
 
