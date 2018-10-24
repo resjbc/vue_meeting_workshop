@@ -9,7 +9,9 @@ body {
 }
 
 .card ,
-.card-header {
+.card-header,
+.form-control,
+.btn {
     border-radius: 0 !important;
 }
 
@@ -21,4 +23,9 @@ body {
 .card-header {
     background-color: #17A2B8; 
     color: #ffffff;
+}
+
+label {
+    color: #6C757D;
+    font-weight: 300;
 }
