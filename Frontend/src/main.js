@@ -5,6 +5,7 @@ import store from './store'
 
 import 'bootstrap/dist/css/bootstrap.css'
 import 'bootstrap/dist/js/bootstrap'
+import './assets/styles.css'
 import * as jquery from 'jquery'
 
 Vue.config.productionTip = false
