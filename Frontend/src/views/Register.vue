@@ -9,6 +9,7 @@
                         REGISTER
                     </h1>
                  <div class="card-body">
+                 
                      <form @submit.prevent="onSubmit()">
                          <div class="form-group">
                              <label for="">ชื่อผู้ใช้งาน</label>
@@ -54,6 +55,11 @@
                                <span class="invalid-feedback">{{ errors.first('u_lastname') }}</span>
                          </div>
                     
+
+                        <div v-if="errorMessage" class="alert alert-warning text-center">
+                            {{errorMessage}}
+                        </div>
+
                          <div class="form-group buttons">
                              <button type="submit" class="btn btn-info btn-block">
                                  ลงทะเบียน
@@ -73,6 +79,7 @@
 </template>
 
 <script>
+import axios from "axios";
 export default {
   data() {
     return {
@@ -81,15 +88,31 @@ export default {
         u_password: "",
         u_firstname: "",
         u_lastname: ""
-      }
+      },
+      errorMessage: ""
     };
   },
   methods: {
     //บันทึกข้อมูลลงทะเบียน
     onSubmit() {
-        this.$validator.validateAll().then(valid => {
-            console.log(valid);
-        });
+      this.$validator.validateAll().then(valid => {
+        if (!valid) return;
+        axios
+          .post("api/account/register", this.form)
+          .then(response => this.onReset())
+          .catch(err => (this.errorMessage = err.response.data.message));
+      });
+    },
+    // ล้างค่า Form
+    onReset() {
+      this.errorMessage = null;
+      this.$validator.reset();
+      this.form = {
+        u_username: "",
+        u_password: "",
+        u_firstname: "",
+        u_lastname: ""
+      };
     }
   }
 };
