@@ -14,7 +14,7 @@
                              <label for="">ชื่อผู้ใช้งาน</label>
                              <input type="text" 
                              name="u_username"
-                             v-validate="'required'"
+                             v-validate="{required:true , regex: /^[A-Za-z0-9]{6,15}$/}"
                              v-model.trim="form.u_username"
                              :class="{'is-invalid':errors.has('u_username')}"
                              class="form-control">
@@ -25,7 +25,7 @@
                              <label for="">รหัสผ่าน</label>
                              <input type="password" 
                               name="u_password"
-                              v-validate="'required'"
+                               v-validate="{required:true , regex: /^[A-Za-z0-9]{6,15}$/}"
                               v-model.trim="form.u_password"
                                :class="{'is-invalid':errors.has('u_password')}"
                              class="form-control">
