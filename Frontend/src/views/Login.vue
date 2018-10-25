@@ -6,7 +6,7 @@
              <img src="/img/logo.svg" alt="Logo" class="img-logo">
                 <div class="card">
                     <h1 class="card-header">
-                        REGISTER
+                        LOGIN
                     </h1>
                  <div class="card-body">
                  
@@ -15,7 +15,7 @@
                              <label for="">ชื่อผู้ใช้งาน</label>
                              <input type="text" 
                              name="u_username"
-                             v-validate="{required:true , regex: /^[A-Za-z0-9]{6,15}$/}"
+                             v-validate="{required:true}"
                              v-model.trim="form.u_username"
                              :class="{'is-invalid':errors.has('u_username')}"
                              class="form-control">
@@ -26,35 +26,12 @@
                              <label for="">รหัสผ่าน</label>
                              <input type="password" 
                               name="u_password"
-                               v-validate="{required:true , regex: /^[A-Za-z0-9]{6,15}$/}"
+                               v-validate="{required:true}"
                               v-model.trim="form.u_password"
                                :class="{'is-invalid':errors.has('u_password')}"
                              class="form-control">
                               <span class="invalid-feedback">{{ errors.first('u_password') }}</span>
-                         </div>
-
-                         <div class="form-group">
-                             <label for="">ชื่อ</label>
-                             <input type="text" 
-                             name="u_firstname"
-                              v-validate="'required'"
-                             v-model.trim="form.u_firstname"
-                             :class="{'is-invalid':errors.has('u_firstname')}"
-                             class="form-control">
-                              <span class="invalid-feedback">{{ errors.first('u_firstname') }}</span>
-                         </div>
-
-                         <div class="form-group">
-                             <label for="">นามสกุล</label>
-                             <input type="text"
-                               name="u_lastname"
-                              v-validate="'required'"
-                               v-model.trim="form.u_lastname"
-                               :class="{'is-invalid':errors.has('u_lastname')}"
-                              class="form-control">
-                               <span class="invalid-feedback">{{ errors.first('u_lastname') }}</span>
-                         </div>
-                    
+                         </div>            
 
                         <div v-if="errorMessage" class="alert alert-warning text-center">
                             {{errorMessage}}
@@ -62,11 +39,11 @@
 
                          <div class="form-group buttons">
                              <button type="submit" class="btn btn-info btn-block">
-                                 ลงทะเบียน
+                                  เข้าสู่ระบบ
                              </button>
 
-                             <button  type="button" @click="onRedirectToLogin()" class="btn btn-secondary btn-block">
-                                 เข้าสู่ระบบ
+                             <button  type="button" @click="onRedirectToRegister()" class="btn btn-secondary btn-block">
+                                ลงทะเบียน
                              </button>
                          </div>
                      </form>
@@ -85,9 +62,7 @@ export default {
     return {
       form: {
         u_username: "",
-        u_password: "",
-        u_firstname: "",
-        u_lastname: ""
+        u_password: ""
       },
       errorMessage: ""
     };
@@ -99,10 +74,7 @@ export default {
         if (!valid) return;
         axios
           .post("api/account/register", this.form)
-          .then(response => {
-            this.onReset();
-            this.onRedirectToLogin();
-            })
+          .then(response => this.onReset())
           .catch(err => (this.errorMessage = err.response.data.message));
       });
     },
@@ -112,13 +84,11 @@ export default {
       this.$validator.reset();
       this.form = {
         u_username: "",
-        u_password: "",
-        u_firstname: "",
-        u_lastname: ""
+        u_password: ""
       };
     },
-    onRedirectToLogin(){
-        this.$router.push({name : "login"});
+    onRedirectToRegister(){
+        this.$router.push({name : "register"});
     }
   }
 };
