@@ -23,4 +23,18 @@ router.post('/register', [
 
 });
 
+
+//เข้าสู่ระบบ
+router.post('/login',[
+    check('u_username').not().isEmpty(),
+    check('u_password').not().isEmpty()
+], (req,res) => {
+    try {
+        req.validate();
+    }catch (ex){
+        res.error(ex);
+    }
+    res.json({message: 'login page'});
+})
+
 module.exports = router;
