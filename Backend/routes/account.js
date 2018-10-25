@@ -3,7 +3,7 @@ const {
     check
 } = require('express-validator/check');
 const {
-    onRegister
+    onRegister,onLogin
 } = require('../services/account.js');
 
 //หน้าลงทะเบียน
@@ -25,16 +25,22 @@ router.post('/register', [
 
 
 //เข้าสู่ระบบ
-router.post('/login',[
+router.post('/login', [
     check('u_username').not().isEmpty(),
     check('u_password').not().isEmpty()
-], (req,res) => {
+], async (req, res) => {
     try {
         req.validate();
-    }catch (ex){
+        const userLogin = await onLogin(req.body);
+        req.session.userLogin = userLogin;
+        res.json(userLogin);
+    } catch (ex) {
         res.error(ex);
     }
-    res.json({message: 'login page'});
-})
+});
+
+/*router.get('/userLogin' , (req,res) => {
+    res.json(req.session.userLogin);
+})*/
 
 module.exports = router;
