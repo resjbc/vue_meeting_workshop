@@ -18,7 +18,7 @@ module.exports = {
         return new Promise((resolve, reject) => {
             connection.query('SELECT * FROM tb_users WHERE u_username=?',
                 [value.u_username], (error, result) => {
-                    if (!result[0]) reject(new Error('Invalid Username'));
+                    if (error) reject(error);
                     if (result.length > 0) {
                         const userLogin = result[0];
                         if (password_verify(value.u_password, userLogin.u_password)) {
@@ -26,8 +26,9 @@ module.exports = {
                             delete userLogin.u_created;
                             delete userLogin.u_updated;
                             resolve(userLogin);
-                        } else reject(new Error('Invalid Username or Password'))
+                        }  
                     }
+                    reject(new Error('Invalid Username or Password'))
                 });
         });
     }

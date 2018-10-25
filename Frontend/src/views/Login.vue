@@ -68,13 +68,15 @@ export default {
     };
   },
   methods: {
-    //บันทึกข้อมูลลงทะเบียน
+    //ส่งข้อมูลไปตรวจสอบ
     onSubmit() {
       this.$validator.validateAll().then(valid => {
         if (!valid) return;
         axios
-          .post("api/account/register", this.form)
-          .then(response => this.onReset())
+          .post("api/account/login", this.form)
+          .then(response => {
+            this.$router.push({name: "home"});
+          })
           .catch(err => (this.errorMessage = err.response.data.message));
       });
     },
@@ -87,6 +89,7 @@ export default {
         u_password: ""
       };
     },
+    //ไปที่หน้าลงทะเบียน
     onRedirectToRegister(){
         this.$router.push({name : "register"});
     }
