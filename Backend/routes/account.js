@@ -3,7 +3,8 @@ const {
     check
 } = require('express-validator/check');
 const {
-    onRegister,onLogin
+    onRegister,
+    onLogin
 } = require('../services/account.js');
 
 //หน้าลงทะเบียน
@@ -39,8 +40,28 @@ router.post('/login', [
     }
 });
 
-/*router.get('/userLogin' , (req,res) => {
-    res.json(req.session.userLogin);
-})*/
+//ตรวจสอบ UserLogin
+router.post('/getUserLogin', (req, res) => {
+    try {
+        if (req.session.userLogin)
+            return res.json(req.session.userLogin);
+
+        throw new Error('Unauthorize');
+
+    } catch (ex) {
+        res.error(ex, 401);
+    }
+
+})
+
+//ออกจากระบบ
+router.post('/logout', (req, res) => {
+    try {
+        delete req.session.userLogin;
+        res.json({message: 'Logout'});
+    } catch (ex) {
+        res.error(ex);
+    }
+})
 
 module.exports = router;
